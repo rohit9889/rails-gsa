@@ -1,0 +1,28 @@
+== RailsGSA
+
+Rails gem for integrating GSA(Google Search Appliance) with your rails application.
+
+== Install
+
+gem install rails-gsa
+
+== Usage
+
+Suppose you have access to a GSA with url "http://testgsa.com", and you want to search for a query string "hello". You can do this using 2 methods:
+1) Send request to the XML API of GSA(XML Response Object)
+2) Send request to the Cluster API of GSA(JSON Response Object)
+
+If we follow the first way, we need to do the following wherever required:
+
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "xml")
+
+The above line of code does the following
+1) Sends a request to the GSA with the specified search term.
+2) Parse the XML response given by the GSA.
+3) Create and return a Hash object of the resultset generated after parsing the XML response.
+
+For the second method, you just need to change the value of the :output parameter to "json", as below:
+
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "json")
+
+This will also return you a Hash object which is created by parsing the JSON response of the GSA.
