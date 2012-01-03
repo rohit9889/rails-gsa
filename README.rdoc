@@ -2,10 +2,6 @@
 
 Rails gem for integrating GSA(Google Search Appliance) with your rails application.
 
-== Install
-
-gem install rails-gsa
-
 == Usage
 
 Suppose you have access to a GSA with url "http://testgsa.com", and you want to search for a query string "hello". You can do this using 2 methods:
