@@ -1,24 +1,67 @@
 == RailsGSA
 
 Rails gem for integrating GSA(Google Search Appliance) with your rails application.
+Getting search results from your GSA can be done in 2 ways:
+
+  * Send request to the XML API of GSA(XML Response Object)
+  * Send request to the Cluster API of GSA(JSON Response Object)
+
+== Installation
+
+  gem install rails-gsa
 
 == Usage
 
-Suppose you have access to a GSA with url "http://testgsa.com", and you want to search for a query string "hello". You can do this using 2 methods:
-1) Send request to the XML API of GSA(XML Response Object)
-2) Send request to the Cluster API of GSA(JSON Response Object)
+=== Get JSON Response
 
-If we follow the first way, we need to do the following wherever required:
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "json")
+  # where,
+  # gsa_url is the domain of your GSA
+  # search_term is the query
+  # output is the expected response type
+
+Here a request will be sent to your GSA and the recieved JSON response will be parsed and returned to you as a Hash
+
+=== Get XML Response
 
   RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "xml")
 
-The above line of code does the following
-1) Sends a request to the GSA with the specified search term.
-2) Parse the XML response given by the GSA.
-3) Create and return a Hash object of the resultset generated after parsing the XML response.
+Here a request will be sent to your GSA and the recieved XML response will be parsed and returned to you as a Hash
 
-For the second method, you just need to change the value of the :output parameter to "json", as below:
+== Extra Options to modify the response
 
-  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "json")
+=== Access Level
 
-This will also return you a Hash object which is created by parsing the JSON response of the GSA.
+Specifies whether to search public content, secure content, or both.
+
+  # Default Value: "p"
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :access => "s")
+  # Possible values for the access parameter are:
+  # p - search only public content 
+  # s - search only secure content 
+  # a - search all content, both public and secure 
+
+=== Change the Collection
+
+Limits search results to the contents of the specified collection. You can search multiple collections by separating collection names with the OR character, which is notated as the pipe symbol, or the AND character, which is notated as a period. If a user submits a search query without the site parameter, the entire search index is queried.
+
+  # Default Value: "default_collection"
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "myCollection")
+  
+  # You can also specify whether you want to search results in multiple collections as given below:
+  
+  # The following example uses the AND character:
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "col1.col2")
+  
+  # The following example uses the OR character:
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "col1|col2")
+
+=== Pagination
+
+You can use the pagination parameters to get results as you desire
+
+  RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :start => 10, :num => 20)
+  # Deafult value: start = 0; num = 10
+
+The above example will give you results starting from 10 and the next 20 results.
+The maximum number of results available for a query is 1,000, i.e., the value of the start parameter added to the value of the num parameter cannot exceed 1,000. 

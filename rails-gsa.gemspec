@@ -2,13 +2,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails-gsa}
-  s.version = "0.0.1"
+  s.version = "0.0.3"
   s.date = Date.today
 
   s.description = %q{Integrate GSA(Google Search Appliance) with your ruby/rails application.}
   s.summary = %q{Integrate GSA(Google Search Appliance) with your ruby/rails application.}
   
-  s.authors = [%q{Rohit Sharma}, %q{Riddhi Agrawal}]
+  s.author = %q{Rohit Sharma}
   s.email = %q{rohit0981989@gmail.com}
   s.homepage = %q{http://github.com/rohit9889/rails-gsa}
   s.license = 'MIT'

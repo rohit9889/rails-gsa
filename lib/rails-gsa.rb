@@ -23,6 +23,11 @@ module RailsGSA
 	default_options
     @default_options.merge!(args)
 	raise ArgumentError, "GSA URL missing. Please provide valid arguments." if @default_options[:gsa_url].empty? || @default_options[:gsa_url].nil?
+	
+	@default_options[:access] = "p" unless ["p", "s", "a"].include?(@default_options[:access])
+	@default_options[:start] = 0 unless @default_options[:start].is_a?(Fixnum)
+	@default_options[:num] = 10 unless @default_options[:num].is_a?(Fixnum)
+	
 	return perform_search
   end
 
