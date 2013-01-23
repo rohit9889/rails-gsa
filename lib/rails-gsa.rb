@@ -1,5 +1,4 @@
-require 'uri'
-require 'rest_client'
+require 'http_requestor'
 require 'nokogiri'
 require 'json'
 
@@ -23,23 +22,24 @@ module RailsGSA
   def self.search(args = {})
 	default_options
     @default_options.merge!(args)
-	raise ArgumentError, "GSA URL missing. Please provide valid arguments." if @default_options[:gsa_url].empty?
+	raise ArgumentError, "GSA URL missing. Please provide valid arguments." if @default_options[:gsa_url].empty? || @default_options[:gsa_url].nil?
 	return perform_search
   end
 
   protected
     def self.perform_search
+		@http =  HTTP::Requestor.new(@default_options[:gsa_url])
 		if @default_options[:output] == "json"
-			json_response = RestClient.post(json_search_url,{},:content_type => "", :response => "json")
+			json_response = @http.post(json_search_url).body
 			response_object = JSON.parse(json_response)
-			return (response_object.blank? ? {} : response_object)
+			return ((response_object.empty? || response_object.nil?) ? {} : response_object)
 		elsif @default_options[:output] == "xml"
 			return xml_parsed_to_search_results(xml_search_url)
 		end
 	end
 
 	def self.json_search_url
-		url = URI.escape("#{@default_options[:gsa_url]}/cluster?q=#{@default_options[:search_term]}&coutput=json&" +
+		url = URI.escape("/cluster?q=#{@default_options[:search_term]}&coutput=json&" +
           "access=#{@default_options[:access]}&output=xml_no_dtd&client=#{@default_options[:client]}&proxystylesheet=#{@default_options[:proxystylesheet]}&" +
           "site=#{@default_options[:site]}&start=#{@default_options[:start]}&num=#{@default_options[:num]}"
     )
@@ -47,7 +47,7 @@ module RailsGSA
 	end
 	
 	def self.xml_search_url
-		url = URI.escape("#{@default_options[:gsa_url]}/search?q=#{@default_options[:search_term]}&output=xml&client=#{@default_options[:client]}&" +
+		url = URI.escape("/search?q=#{@default_options[:search_term]}&output=xml&client=#{@default_options[:client]}&" +
           "start=#{@default_options[:start]}&num=#{@default_options[:num]}&filter=0"
 		)
 		return url
@@ -56,11 +56,10 @@ module RailsGSA
 	def self.xml_parsed_to_search_results(url)
 		if url.include?("cache")
 			new_url = url+"&proxystylesheet=my_frontend"
-			return {:cached_page => RestClient.get(new_url)}
+			return {:cached_page => @http.get(new_url).body}
 		else
 			new_output = ""
-      puts url.inspect
-			output = RestClient.get(url)
+			output = @http.get(url).body
 			output.each_line{|line| new_output += line.chop}
 			doc = Nokogiri::XML(new_output)
 			search_result_nodes = doc.xpath('//GSP/RES')
@@ -89,12 +88,12 @@ module RailsGSA
 			results[:total_results] = 0
 			results[:search_time] = doc.xpath('//GSP/TM')[0].text
 
-			unless doc.xpath('//GSP/RES').blank?
+			unless doc.xpath('//GSP/RES').empty? || doc.xpath('//GSP/RES').nil?
 				results[:from] = doc.xpath('//GSP/RES')[0]['SN']
 				results[:to] = doc.xpath('//GSP/RES')[0]['EN']
 			end
 
-			unless search_result_nodes.blank?
+			unless search_result_nodes.empty? || search_result_nodes.nil?
 				index = 0
 				search_result_nodes.children.each do |child|
 					case child.name
