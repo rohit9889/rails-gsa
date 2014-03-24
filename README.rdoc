@@ -6,7 +6,6 @@ Getting search results from your GSA can be done in 2 ways:
   * Send request to the XML API of GSA(XML Response Object)
   * Send request to the Cluster API of GSA(JSON Response Object)
 
-[![Gem Version](https://badge.fury.io/rb/rails-gsa.png)](http://badge.fury.io/rb/rails-gsa)
 
 == Installation
 
