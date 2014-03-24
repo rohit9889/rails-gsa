@@ -1,12 +1,10 @@
-== RailsGSA
+== RailsGSA {<img src="https://badge.fury.io/rb/rails-gsa.png" alt="Gem Version" />}[http://badge.fury.io/rb/rails-gsa]
 
 Rails gem for integrating GSA(Google Search Appliance) with your rails application.
 Getting search results from your GSA can be done in 2 ways:
 
   * Send request to the XML API of GSA(XML Response Object)
   * Send request to the Cluster API of GSA(JSON Response Object)
-
-{<img src="https://badge.fury.io/rb/rails-gsa.png" alt="Gem Version" />}[http://badge.fury.io/rb/rails-gsa]
 
 == Installation
 
