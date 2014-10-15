@@ -282,6 +282,13 @@ h4:before {
   margin-left: -2.8em;
 }
 
+h4.custom:before {
+  content: none;
+  color: none;
+  padding-right: none;
+  margin-left: none;
+}
+
 #main-content h5 {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 14px;
