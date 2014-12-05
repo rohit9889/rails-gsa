@@ -79,36 +79,38 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12">
-          <h2>Features</h2>
-          <ul class="bullet-less">
-            <li>
-              <i class="fa fa-check"></i>
-              Send HTTP requests
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              Multipart Requests
-            </li>
-            <li>
-              <i class="fa fa-check"></i>
-              Support for HEAD, OPTIONS, PATCH, TRACE request types
-            </li>
-          </ul>
-        </div>
-      </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Features</h2>
+              <ul class="bullet-less">
+                <li>
+                  <i class="fa fa-check"></i>
+                  Send HTTP requests
+                </li>
+                <li>
+                  <i class="fa fa-check"></i>
+                  Multipart Requests
+                </li>
+                <li>
+                  <i class="fa fa-check"></i>
+                  Support for HEAD, OPTIONS, PATCH, TRACE request types
+                </li>
+              </ul>
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Install</h2>
-          <pre>gem install http-requestor</pre>
-        </div>
-      </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Install</h2>
+              <pre>gem install http-requestor</pre>
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Usage</h2>
-          <p>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Usage</h2>
+              <p>
   <h4 class="custom">Initialize a domain, and send request to multiple paths</h4>
   <pre><code>http = HTTP::Requestor.new("http://www.mydomain.com")
 # This will initialize the HTTP::Requestor class
@@ -182,16 +184,56 @@ response = http.put_multipart(some_path, {:file => File.open("testfile.txt")})</
   HTTP::Requestor.request(domain, request_type, path, parameters, headers)
   # where request type can be any value within GET, POST, PUT, DELETE, OPTIONS, PATCH, MOVE, HEAD, TRACE</code></pre>
 </p>
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Issues and Suggestions</h2>
-          <p>
-            Please report all the issues in the Github Issues Page, suggestions are also welcome. You can also mail me at 
-            <a href="mailto:rohit0981989@gmail.com">rohit0981989@gmail.com</a> for the same.
-          </p>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Issues and Suggestions</h2>
+              <p>
+                Please report all the issues in the Github Issues Page, suggestions are also welcome. You can also mail me at 
+                <a href="mailto:rohit0981989@gmail.com">rohit0981989@gmail.com</a> for the same.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4>Other Projects</h4>
+                </div>
+                <div class="panel-body">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <h4 class="list-group-item-heading">
+                        <a href="http://places.rohit-sharma.in" target="_blank">built.io Places</a>
+                      </h4>
+                      <p class="list-group-item-text">
+                        A foursquare like application built on top of built.io
+                      </p>
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="list-group-item-heading">
+                        <a href="/isbndbjs">isbndbjs</a>
+                      </h4>
+                      <p class="list-group-item-text">
+                        An SDK for retrieving data from ISBNDB.
+                      </p>
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="list-group-item-heading">
+                        <a href="https://rubygems.org/gems/rails-gsa">rails-gsa</a>
+                      </h4>
+                      <p class="list-group-item-text">
+                        Integrate GSA(Google Search Appliance) with your rails application
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
