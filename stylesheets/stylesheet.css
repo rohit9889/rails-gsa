@@ -282,6 +282,7 @@ h4:before {
   margin-left: -2.8em;
 }
 
+<<<<<<< HEAD
 h4.custom:before {
   content: none;
   color: none;
@@ -289,6 +290,8 @@ h4.custom:before {
   margin-left: none;
 }
 
+=======
+>>>>>>> 0dbbc0f3102b8f0da10e40d668f760f0ae31aa3a
 #main-content h5 {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 14px;
