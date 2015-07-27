@@ -10,9 +10,9 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>http-requestor</title>
-    <meta name="description" content="A rubygem which helps you to send http requests. You can send any type of request(GET, POST, PUT, DELETE, PATCH). Requests to URLs behind basic authentication is also supported." />
-    <meta name="keywords" content="http, requestor, http-requestor, sdk, ruby, gem, rubygem" />
+    <title>rails-gsa</title>
+    <meta name="description" content="A rubygem which helps you to Integrate GSA(Google Search Appliance) with your ruby/rails application." />
+    <meta name="keywords" content="Google Search Appliance, GSA, gsa, sdk, ruby, gem, rubygem, rails" />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
@@ -56,21 +56,21 @@
       <div class="row">
         <div class="col-md-9">
           <div class="jumbotron">
-            <h1>http-requestor</h1>
-            <p>A rubygem which allows you to perform HTTP Requests</p>
+            <h1>rails-gsa</h1>
+            <p>A rubygem which allows you to integrate GSA(Google Search Appliance) with your ruby/rails application.</p>
           </div>
         </div>
         <div class="col-md-3">
           <div class="github">
-            <a href="https://github.com/rohit9889/http-requestor" class="btn btn-default btn-lg" target="_blank">
+            <a href="https://github.com/rohit9889/rails-gsa" class="btn btn-default btn-lg" target="_blank">
               <i class="fa fa-github-alt"></i>
               View on GitHub
             </a>
-            <a href="https://github.com/rohit9889/http-requestor/zipball/master" class="btn btn-default btn-lg" target="_blank">
+            <a href="https://github.com/rohit9889/rails-gsa/zipball/master" class="btn btn-default btn-lg" target="_blank">
               <i class="fa fa-file-zip-o"></i>
               Download Zip
             </a>
-            <a href="https://github.com/rohit9889/http-requestor/tarball/master" class="btn btn-default btn-lg" target="_blank">
+            <a href="https://github.com/rohit9889/rails-gsa/tarball/master" class="btn btn-default btn-lg" target="_blank">
               <i class="fa fa-file-zip-o"></i>
               Download Tarball
             </a>
@@ -86,15 +86,11 @@
               <ul class="bullet-less">
                 <li>
                   <i class="fa fa-check"></i>
-                  Send HTTP requests
+                  Send request to the XML API of GSA
                 </li>
                 <li>
                   <i class="fa fa-check"></i>
-                  Multipart Requests
-                </li>
-                <li>
-                  <i class="fa fa-check"></i>
-                  Support for HEAD, OPTIONS, PATCH, TRACE request types
+                  Send request to the Cluster API of GSA
                 </li>
               </ul>
             </div>
@@ -103,7 +99,7 @@
           <div class="row">
             <div class="col-md-12">
               <h2>Install</h2>
-              <pre>gem install http-requestor</pre>
+              <pre>gem install rails-gsa</pre>
             </div>
           </div>
 
@@ -111,78 +107,53 @@
             <div class="col-md-12">
               <h2>Usage</h2>
               <p>
-  <h4 class="custom">Initialize a domain, and send request to multiple paths</h4>
-  <pre><code>http = HTTP::Requestor.new("http://www.mydomain.com")
-# This will initialize the HTTP::Requestor class
-
-get_request    => http.get(path, parameters, headers)
-post_request   => http.post(path, parameters, headers)
-put_request    => http.put(path, parameters, headers)
-delete_request => http.delete(path, parameters, headers)
-
-# path         => for example: "/some_path"
-# parameters   => this is an optional parameter, if you want to send some parameters alongwith the request
-# headers      => this is also an optional parameter, you can pass a hash with stringified keys</code></pre>
+  <h4 class="custom">Get JSON Response</h4>
+  <pre><code>RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "json")
+# where,
+# gsa_url is the domain of your GSA
+# search_term is the query
+# output is the expected response type</code></pre>
+  <p>Here a request will be sent to your GSA and the recieved JSON response will be parsed and returned to you as a Hash</p>
 </p>
 
 <p>
-  <h4 class="custom">Get a response right away</h4>
-  <pre><code>HTTP::Requestor.request(domain, request_type, path, parameters, headers)
-# domain       => for example: "http://www.some_domain.com"
-# request_type => GET|POST|PUT|DELETE
-# path         => for example: "/some_path"
-# parameters   => this is an optional parameter, if you want to send some parameters alongwith the request
-# headers      => this is also an optional parameter, you can pass a hash with stringified keys</code></pre>
+  <h4 class="custom">Get XML Response</h4>
+  <pre><code>RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :output => "xml")</code></pre>
+  <p>Here a request will be sent to your GSA and the recieved XML response will be parsed and returned to you as a Hash</p>
 </p>
 
 <p>
-  <strong>OR you can do it the other way</strong>
-  <pre><code>HTTP::Requestor.request_with_url(url, request_type, data, headers)
-# url          => for example: "http://www.some_domain.com/some_path_value"
-# request_type => GET|POST|PUT|DELETE
-# parameters   => this is an optional parameter, if you want to send some parameters alongwith the request
-# headers      => this is also an optional parameter, you can pass a hash with stringified keys</code></pre>
+  <h4 class="custom">Modify Access Level</h4>
+  <p>Specifies whether to search public content, secure content, or both.</p>
+  <pre><code># Default Value: "p"
+RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :access => "s")
+# Possible values for the access parameter are:
+# p - search only public content 
+# s - search only secure content 
+# a - search all content, both public and secure</code></pre>
 </p>
 
 <p>
-  <h4 class="custom">HTTP Basic Authentication</h4>
-  <pre><code>HTTP::Requestor.send_basic_auth_request(url, username, password)
-# url      => for example: "http://www.some_domain.com/some_path_value" only GET URL's supported currently
-# username => basic_auth_username
-# password => basic_auth_password</code></pre>
+  <h4 class="custom">Change the Collection</h4>
+  <p>Limits search results to the contents of the specified collection. You can search multiple collections by separating collection names with the OR character, which is notated as the pipe symbol, or the AND character, which is notated as a period. If a user submits a search query without the site parameter, the entire search index is queried.</p>
+  <pre><code># Default Value: "default_collection"
+RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "myCollection")
+
+# You can also specify whether you want to search results in multiple collections as given below:
+
+# The following example uses the AND character:
+RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "col1.col2")
+
+# The following example uses the OR character:
+RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :site => "col1|col2")</code></pre>
 </p>
 
 <p>
-  <h4 class="custom">Multipart Form Post</h4>
-  <pre><code>uri = "http://some_domain/somepath"
-data = {:file => File.open("testfile.txt")}
-response = HTTP::Requestor.multipart_request(uri, "post | put", data)
-
-# If you already have the instance of HTTP::Requestor class then you can upload files as follows:
-
-http = HTTP::Requestor.new("http://www.mydomain.com")
-response = http.post_multipart(some_path, {:file => File.open("testfile.txt")})
-response = http.put_multipart(some_path, {:file => File.open("testfile.txt")})</code></pre>
-</p>
-
-<p>
-  <h4>More HTTP Verbs</h4>
-  <pre><code>You can also use other HTTP Verbs such as OPTIONS, PATCH, MOVE, HEAD, TRACE
-
-* By instantiating the HTTP::Requestor class
-
-  http = HTTP::Requestor.new("http://www.mydomain.com")
-
-  http.options(path, parameters, headers)
-  http.patch(path, parameters, headers)
-  http.move(path, parameters, headers)
-  http.head(path, parameters, headers)
-  http.trace(path, parameters, headers)
-
-* Directly calling the request method
-
-  HTTP::Requestor.request(domain, request_type, path, parameters, headers)
-  # where request type can be any value within GET, POST, PUT, DELETE, OPTIONS, PATCH, MOVE, HEAD, TRACE</code></pre>
+  <h4>Pagination</h4>
+  <p>You can use the pagination parameters to get results as you desire</p>
+  <pre><code>RailsGSA.search(:gsa_url => "http://testgsa.com", :search_term => "hello", :start => 10, :num => 20)
+# Default value: start = 0; num = 10</code></pre>
+<p>The above example will give you results starting from 10 and the next 20 results. The maximum number of results available for a query is 1,000, i.e., the value of the start parameter added to the value of the num parameter cannot exceed 1,000.</p>
 </p>
             </div>
           </div>
@@ -223,10 +194,10 @@ response = http.put_multipart(some_path, {:file => File.open("testfile.txt")})</
                     </li>
                     <li class="list-group-item">
                       <h4 class="list-group-item-heading">
-                        <a href="https://rubygems.org/gems/rails-gsa">rails-gsa</a>
+                        <a href="/http-requestor">http-requestor</a>
                       </h4>
                       <p class="list-group-item-text">
-                        Integrate GSA(Google Search Appliance) with your rails application
+                        A Wrapper around Net/HTTP which allows you to perform HTTP Requests
                       </p>
                     </li>
                   </ul>
